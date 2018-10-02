@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	sdk "github.com/gaia-pipeline/gosdk"
 )
@@ -16,5 +17,6 @@ func jobDestroy(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Destroying..")
+	time.Sleep(1 * time.Second)
 	return
 }

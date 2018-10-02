@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	sdk "github.com/gaia-pipeline/gosdk"
 )
@@ -16,5 +17,6 @@ func jobEnv(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Creating Environment..")
+	time.Sleep(1 * time.Second)
 	return
 }
