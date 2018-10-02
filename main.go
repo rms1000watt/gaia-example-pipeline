@@ -19,7 +19,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 1: Tag",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -32,7 +32,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 2: Env",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -45,7 +45,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 3: Build",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -58,7 +58,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 4: Deploy",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -71,7 +71,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 5: Destroy",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -84,7 +84,7 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 6: PR",
-					Type:        sdk.BoolInp,
+					Type:        sdk.TextFieldInp,
 					Key:         keySkip,
 				},
 			},
@@ -106,9 +106,5 @@ func skip(args sdk.Arguments) (skip bool) {
 		}
 	}
 
-	return
-}
-
-func nilHandler(args sdk.Arguments) (err error) {
 	return
 }
