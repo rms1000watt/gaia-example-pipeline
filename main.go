@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/davecgh/go-spew/spew"
 	sdk "github.com/gaia-pipeline/gosdk"
 )
 
@@ -110,6 +111,7 @@ func middleware(fn func(sdk.Arguments) error, title string) func(sdk.Arguments) 
 
 func skip(args sdk.Arguments) (skip bool) {
 	for _, arg := range args {
+		spew.Dump(arg)
 		if arg.Key == keySkip && arg.Value == "true" {
 			skip = true
 			return
