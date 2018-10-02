@@ -13,7 +13,7 @@ const (
 func main() {
 	jobs := sdk.Jobs{
 		sdk.Job{
-			Handler:     middleware(jobTag, "Tag"),
+			Handler:     jobTag,
 			Title:       "Tag",
 			Description: "This tags all the github repos",
 			Args: sdk.Arguments{
@@ -25,7 +25,7 @@ func main() {
 			},
 		},
 		sdk.Job{
-			Handler:     middleware(jobEnv, "Env"),
+			Handler:     jobEnv,
 			Title:       "Env",
 			Description: "This sets up an environment",
 			DependsOn:   []string{"Tag"},
@@ -38,7 +38,7 @@ func main() {
 			},
 		},
 		sdk.Job{
-			Handler:     middleware(jobBuild, "Build"),
+			Handler:     jobBuild,
 			Title:       "Build",
 			Description: "This builds everything",
 			DependsOn:   []string{"Env"},
@@ -51,7 +51,7 @@ func main() {
 			},
 		},
 		sdk.Job{
-			Handler:     middleware(jobDeploy, "Deploy"),
+			Handler:     jobDeploy,
 			Title:       "Deploy",
 			Description: "This will deploy everything",
 			DependsOn:   []string{"Build"},
@@ -64,7 +64,7 @@ func main() {
 			},
 		},
 		sdk.Job{
-			Handler:     middleware(jobDestroy, "Destroy"),
+			Handler:     jobDestroy,
 			Title:       "Destroy",
 			Description: "This will destroy the environment",
 			DependsOn:   []string{"Deploy"},
@@ -77,7 +77,7 @@ func main() {
 			},
 		},
 		sdk.Job{
-			Handler:     middleware(jobPR, "PR"),
+			Handler:     jobPR,
 			Title:       "PR",
 			Description: "This will make the PR",
 			DependsOn:   []string{"Destroy"},
@@ -96,22 +96,10 @@ func main() {
 	}
 }
 
-func middleware(fn func(sdk.Arguments) error, title string) func(sdk.Arguments) error {
-	return func(args sdk.Arguments) (err error) {
-		if skip(args) {
-			log.Println("Skipping:", title)
-			return nilHandler(args)
-		}
-
-		log.Println("Starting:", title)
-		return fn(args)
-	}
-}
-
 func skip(args sdk.Arguments) (skip bool) {
 	for _, arg := range args {
-		log.Println(arg.Key)
-		log.Println(arg.Value)
+		log.Println("Key:", arg.Key)
+		log.Println("Value:", arg.Value)
 		if arg.Key == keySkip && arg.Value == "true" {
 			skip = true
 			return
