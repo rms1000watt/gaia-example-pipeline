@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	sdk "github.com/gaia-pipeline/gosdk"
@@ -13,8 +12,8 @@ const (
 
 func main() {
 	jobs := sdk.Jobs{
-		middleware(sdk.Job{
-			Handler:     jobTag,
+		sdk.Job{
+			Handler:     middleware(jobTag, "Tag"),
 			Title:       "Tag",
 			Description: "This tags all the github repos",
 			Args: sdk.Arguments{
@@ -24,9 +23,9 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
-		middleware(sdk.Job{
-			Handler:     jobEnv,
+		},
+		sdk.Job{
+			Handler:     middleware(jobEnv, "Env"),
 			Title:       "Env",
 			Description: "This sets up an environment",
 			DependsOn:   []string{"Tag"},
@@ -37,9 +36,9 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
-		middleware(sdk.Job{
-			Handler:     jobBuild,
+		},
+		sdk.Job{
+			Handler:     middleware(jobBuild, "Build"),
 			Title:       "Build",
 			Description: "This builds everything",
 			DependsOn:   []string{"Env"},
@@ -50,9 +49,9 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
-		middleware(sdk.Job{
-			Handler:     jobDeploy,
+		},
+		sdk.Job{
+			Handler:     middleware(jobDeploy, "Deploy"),
 			Title:       "Deploy",
 			Description: "This will deploy everything",
 			DependsOn:   []string{"Build"},
@@ -63,9 +62,9 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
-		middleware(sdk.Job{
-			Handler:     jobDestroy,
+		},
+		sdk.Job{
+			Handler:     middleware(jobDestroy, "Destroy"),
 			Title:       "Destroy",
 			Description: "This will destroy the environment",
 			DependsOn:   []string{"Deploy"},
@@ -76,9 +75,9 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
-		middleware(sdk.Job{
-			Handler:     jobPR,
+		},
+		sdk.Job{
+			Handler:     middleware(jobPR, "PR"),
 			Title:       "PR",
 			Description: "This will make the PR",
 			DependsOn:   []string{"Destroy"},
@@ -89,7 +88,7 @@ func main() {
 					Key:         keySkip,
 				},
 			},
-		}),
+		},
 	}
 
 	if err := sdk.Serve(jobs); err != nil {
@@ -97,19 +96,16 @@ func main() {
 	}
 }
 
-func middleware(in sdk.Job) (out sdk.Job) {
-	if skip(in.Args) {
-		log.Println("Skipping:", in.Title)
-		out = sdk.Job{
-			Handler: jobNil,
-			Title:   fmt.Sprintf("Skipped: %s", in.Title),
+func middleware(fn func(sdk.Arguments) error, title string) func(sdk.Arguments) error {
+	return func(args sdk.Arguments) (err error) {
+		if skip(args) {
+			log.Println("Skipping:", title)
+			return
 		}
-		return
-	}
 
-	log.Println("Start:", in.Title)
-	out = in
-	return
+		log.Println("Starting:", title)
+		return fn(args)
+	}
 }
 
 func skip(args sdk.Arguments) (skip bool) {
@@ -120,9 +116,5 @@ func skip(args sdk.Arguments) (skip bool) {
 		}
 	}
 
-	return
-}
-
-func jobNil(args sdk.Arguments) (err error) {
 	return
 }
