@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strings"
 
 	sdk "github.com/gaia-pipeline/gosdk"
 )
@@ -19,8 +20,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 1: Tag",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "Tag",
 				},
 			},
 		},
@@ -32,8 +33,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 2: Env",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "Env",
 				},
 			},
 		},
@@ -45,8 +46,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 3: Build",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "Build",
 				},
 			},
 		},
@@ -58,8 +59,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 4: Deploy",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "Deploy",
 				},
 			},
 		},
@@ -71,8 +72,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 5: Destroy",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "Destroy",
 				},
 			},
 		},
@@ -84,8 +85,8 @@ func main() {
 			Args: sdk.Arguments{
 				{
 					Description: "Skip step 6: PR",
-					Type:        sdk.TextFieldInp,
-					Key:         keySkip,
+					Type:        sdk.BoolInp,
+					Key:         keySkip + "PR",
 				},
 			},
 		},
@@ -100,7 +101,7 @@ func skip(args sdk.Arguments) (skip bool) {
 	for _, arg := range args {
 		log.Println("Key:", arg.Key)
 		log.Println("Value:", arg.Value)
-		if arg.Key == keySkip && arg.Value == "true" {
+		if strings.Contains(arg.Key, keySkip) && (arg.Value == "true" || arg.Value == keySkip) {
 			skip = true
 			return
 		}
