@@ -90,6 +90,12 @@ func main() {
 				},
 			},
 		},
+		sdk.Job{
+			Handler:     jobSleep,
+			Title:       "Sleep",
+			Description: "This is going to sleep to let the logs catch up",
+			DependsOn:   []string{"PR"},
+		},
 	}
 
 	if err := sdk.Serve(jobs); err != nil {
