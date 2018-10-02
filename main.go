@@ -100,7 +100,7 @@ func middleware(fn func(sdk.Arguments) error, title string) func(sdk.Arguments) 
 	return func(args sdk.Arguments) (err error) {
 		if skip(args) {
 			log.Println("Skipping:", title)
-			return
+			return nilHandler(args)
 		}
 
 		log.Println("Starting:", title)
@@ -118,5 +118,9 @@ func skip(args sdk.Arguments) (skip bool) {
 		}
 	}
 
+	return
+}
+
+func nilHandler(args sdk.Arguments) (err error) {
 	return
 }
