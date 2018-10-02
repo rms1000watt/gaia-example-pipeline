@@ -6,10 +6,9 @@ import (
 	sdk "github.com/gaia-pipeline/gosdk"
 )
 
-func jobDestroy(args sdk.Arguments) error {
-	log.Println("Destroy Start")
-	defer log.Println("Destroy Done")
+func jobDestroy(args sdk.Arguments) (err error) {
+	defer log.Println("Done: Destroy")
 
 	log.Println("Destroying..")
-	return nil
+	return
 }

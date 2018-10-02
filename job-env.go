@@ -6,10 +6,9 @@ import (
 	sdk "github.com/gaia-pipeline/gosdk"
 )
 
-func jobEnv(args sdk.Arguments) error {
-	log.Println("Evironment Start")
-	defer log.Println("Environment Done")
+func jobEnv(args sdk.Arguments) (err error) {
+	defer log.Println("Done: Environment")
 
 	log.Println("Creating Environment..")
-	return nil
+	return
 }

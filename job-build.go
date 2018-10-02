@@ -6,10 +6,9 @@ import (
 	sdk "github.com/gaia-pipeline/gosdk"
 )
 
-func jobBuild(args sdk.Arguments) error {
-	log.Println("Build Start")
-	defer log.Println("Build Done")
+func jobBuild(args sdk.Arguments) (err error) {
+	defer log.Println("Done: Build")
 
 	log.Println("Building..")
-	return nil
+	return
 }

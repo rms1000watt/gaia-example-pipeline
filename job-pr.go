@@ -6,10 +6,9 @@ import (
 	sdk "github.com/gaia-pipeline/gosdk"
 )
 
-func jobPR(args sdk.Arguments) error {
-	log.Println("PR Start")
-	defer log.Println("PR Done")
+func jobPR(args sdk.Arguments) (err error) {
+	defer log.Println("Done: PR")
 
 	log.Println("Creating PR..")
-	return nil
+	return
 }
