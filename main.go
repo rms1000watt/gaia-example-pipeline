@@ -21,7 +21,8 @@ func main() {
 				{
 					Description: "Skip step 1: Tag",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "Tag",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -34,7 +35,8 @@ func main() {
 				{
 					Description: "Skip step 2: Env",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "Env",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -47,7 +49,8 @@ func main() {
 				{
 					Description: "Skip step 3: Build",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "Build",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -60,7 +63,8 @@ func main() {
 				{
 					Description: "Skip step 4: Deploy",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "Deploy",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -73,7 +77,8 @@ func main() {
 				{
 					Description: "Skip step 5: Destroy",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "Destroy",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -86,7 +91,8 @@ func main() {
 				{
 					Description: "Skip step 6: PR",
 					Type:        sdk.BoolInp,
-					Key:         keySkip + "PR",
+					Key:         keySkip,
+					Value:       "false",
 				},
 			},
 		},
@@ -101,7 +107,7 @@ func skip(args sdk.Arguments) (skip bool) {
 	for _, arg := range args {
 		log.Println("Key:", arg.Key)
 		log.Println("Value:", arg.Value)
-		if strings.Contains(arg.Key, keySkip) && (arg.Value == "true" || arg.Value == keySkip) {
+		if strings.Contains(arg.Key, keySkip) && arg.Value != "false" {
 			skip = true
 			return
 		}
