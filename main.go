@@ -5,55 +5,83 @@ import (
 )
 
 func main() {
-	skipArgs := sdk.Arguments{
-		{
-			Description: "Skip this step",
-			Type:        sdk.BoolInp,
-			Key:         "skip",
-		},
-	}
-
 	jobs := sdk.Jobs{
 		{
 			Handler:     jobTag,
 			Title:       "Tag",
 			Description: "This tags all the github repos",
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 1: Tag",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 		{
 			Handler:     jobEnv,
 			Title:       "Env",
 			Description: "This sets up an environment",
 			DependsOn:   []string{"Tag"},
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 2: Env",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 		{
 			Handler:     jobBuild,
 			Title:       "Build",
 			Description: "This builds everything",
 			DependsOn:   []string{"Env"},
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 3: Build",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 		{
 			Handler:     jobDeploy,
 			Title:       "Deploy",
 			Description: "This will deploy everything",
 			DependsOn:   []string{"Build"},
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 4: Deploy",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 		{
 			Handler:     jobDestroy,
 			Title:       "Destroy",
 			Description: "This will destroy the environment",
 			DependsOn:   []string{"Deploy"},
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 5: Destroy",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 		{
 			Handler:     jobPR,
 			Title:       "PR",
 			Description: "This will make the PR",
 			DependsOn:   []string{"Destroy"},
-			Args:        skipArgs,
+			Args: sdk.Arguments{
+				{
+					Description: "Skip step 6: PR",
+					Type:        sdk.BoolInp,
+					Key:         "skip",
+				},
+			},
 		},
 	}
 
