@@ -9,6 +9,7 @@ import (
 
 func jobDestroy(args sdk.Arguments) (err error) {
 	log.Println("Start: Destroy")
+	time.Sleep(1 * time.Second)
 	defer log.Println("Done: Destroy")
 
 	if skip(args) {
@@ -17,6 +18,5 @@ func jobDestroy(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Destroying..")
-	time.Sleep(1 * time.Second)
 	return
 }

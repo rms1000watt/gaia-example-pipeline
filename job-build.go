@@ -9,6 +9,7 @@ import (
 
 func jobBuild(args sdk.Arguments) (err error) {
 	log.Println("Start: Build")
+	time.Sleep(1 * time.Second)
 	defer log.Println("Done: Build")
 
 	if skip(args) {
@@ -17,6 +18,5 @@ func jobBuild(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Building..")
-	time.Sleep(1 * time.Second)
 	return
 }

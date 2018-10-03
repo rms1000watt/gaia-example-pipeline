@@ -9,6 +9,7 @@ import (
 
 func jobPR(args sdk.Arguments) (err error) {
 	log.Println("Start: PR")
+	time.Sleep(1 * time.Second)
 	defer log.Println("Done: PR")
 
 	if skip(args) {
@@ -17,6 +18,5 @@ func jobPR(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Creating PR..")
-	time.Sleep(1 * time.Second)
 	return
 }

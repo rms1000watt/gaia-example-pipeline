@@ -9,6 +9,7 @@ import (
 
 func jobDeploy(args sdk.Arguments) (err error) {
 	log.Println("Start: Deploy")
+	time.Sleep(1 * time.Second)
 	defer log.Println("Done: Deploy")
 
 	if skip(args) {
@@ -17,6 +18,5 @@ func jobDeploy(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Deploying..")
-	time.Sleep(1 * time.Second)
 	return
 }

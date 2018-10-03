@@ -9,6 +9,7 @@ import (
 
 func jobTag(args sdk.Arguments) (err error) {
 	log.Println("Start: Tag")
+	time.Sleep(1 * time.Second)
 	defer log.Println("Done: Tag")
 
 	if skip(args) {
@@ -17,6 +18,5 @@ func jobTag(args sdk.Arguments) (err error) {
 	}
 
 	log.Println("Tagging all images..")
-	time.Sleep(1 * time.Second)
 	return
 }
